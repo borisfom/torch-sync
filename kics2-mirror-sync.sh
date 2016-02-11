@@ -1,8 +1,10 @@
+REPO_URL=https://git.ps.informatik.uni-kiel.de/curry/kics2.git
+
 echo rm -rf kics2-mirror
 rm -rf kics2-mirror
 
-echo git clone --mirror git://git-ps.informatik.uni-kiel.de/curry/kics2.git kics2-mirror/.git
-git clone --mirror git://git-ps.informatik.uni-kiel.de/curry/kics2.git kics2-mirror/.git
+echo git clone --mirror $REPO_URL kics2-mirror/.git
+git clone --mirror $REPO_URL kics2-mirror/.git
 
 echo cd kics2-mirror
 cd kics2-mirror
