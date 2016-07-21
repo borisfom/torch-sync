@@ -15,9 +15,6 @@ if [[ $i == \[submodule* ]]; then
     # extract the url of the submodule
     murl=$(echo $i|cut -d\  -f3)
 
-    # extract the module name
-    mname=$(basename $mpath)
-
     read i;
     mbranch=$(echo $i|cut -d\  -f3)
 
@@ -37,13 +34,9 @@ if [[ $i == \[submodule* ]]; then
     echo git commit -m \"Removed $mpath submodule\"
     git commit -m "Removed $mpath submodule"
 
-    # add the remote
-    echo git remote add -f $mname $mpath
-    git remote add -f $mname $murl
-
     # add the subtree
-    echo git subtree add --prefix $mpath $murl $mbranch
-    git subtree add --prefix $mpath $mname $mbranch
+    echo git subtree add --squash --prefix $mpath $murl $mbranch
+    git subtree add --squash --prefix $mpath $murl $mbranch
 
     # fetch the files
     echo git fetch $murl $mbranch
