@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # extract the list of submodules from .gitmodule
 cat .gitmodules |while read i
 do
@@ -15,6 +17,9 @@ if [[ $i == \[submodule* ]]; then
 
     # extract the module name
     mname=$(basename $mpath)
+
+    read i;
+    mbranch=$(echo $i|cut -d\  -f3)
 
     # deinit the module
     echo git submodule deinit $mpath
@@ -37,12 +42,11 @@ if [[ $i == \[submodule* ]]; then
     git remote add -f $mname $murl
 
     # add the subtree
-    echo git subtree add --prefix $mpath $murl master
-    git subtree add --prefix $mpath $mname master
+    echo git subtree add --prefix $mpath $murl $mbranch
+    git subtree add --prefix $mpath $mname $mbranch
 
     # fetch the files
-    echo git fetch $murl master
-    git fetch $murl master
+    echo git fetch $murl $mbranch
+    git fetch $murl $mbranch
 fi
 done
-echo git rm -f .gitmodules
