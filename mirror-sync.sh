@@ -3,6 +3,7 @@
 THIS_DIR=$(cd $(dirname $0); pwd)
 BRANCH_NAME=${BRANCH_NAME:-release}
 
+git checkout mirror
 git fetch origin ${BRANCH_NAME}
 git checkout ${BRANCH_NAME} `cat files.list`
 
@@ -22,7 +23,6 @@ if [[ $i == \[submodule* ]]; then
 
     read i;
     mbranch=$(echo $i|cut -d\  -f3)
-
 
     # fetch the submodules files
     git subtree pull --prefix $mpath --squash  $murl $mbranch
