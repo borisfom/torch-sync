@@ -24,15 +24,10 @@ if [[ $i == \[submodule* ]]; then
 
     # remove the module from git
     echo git rm -fr --cached $mpath
-    git rm -fr --cached $mpath
+    git rm -fr --cached $mpath &&  rm -rf $mpath && git commit -m "Removed $mpath submodule" || exit 1
 
-    # remove the module from the filesystem
-    echo rm -rf $mpath
-    rm -rf $mpath
-
-    # commit the change
     echo git commit -m \"Removed $mpath submodule\"
-    git commit -m "Removed $mpath submodule"
+
 
     # add the subtree
     echo git subtree add --squash --prefix $mpath $murl $mbranch
@@ -43,3 +38,5 @@ if [[ $i == \[submodule* ]]; then
     git fetch $murl $mbranch
 fi
 done
+
+git mv .gitmodules modules.gitinfo && git commit -m "Removed .gitmodules" && git push origin ${MIRROR_BRANCH}
